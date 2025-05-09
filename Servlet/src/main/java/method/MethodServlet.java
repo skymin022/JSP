@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+
 import java.io.IOException;
 import java.io.PipedWriter;
 import java.io.PrintWriter;
@@ -44,7 +46,14 @@ public class MethodServlet extends HttpServlet {
 
 	// Post
 	// - /method
+	// *
+	// Content-Type : application/x-www-form-urlencoded 인 경우 폼 요청으로 인식하고
+	// request.getParameter를 호출하본문(body)에서 데이터를 가져온다. 
 	// - body : username, password
+	// *
+	// Content-Type : multipart/form-data인 경우는
+	// request.getParameter() 로 전달된 파라미터를 가져올 수 없다.!!!!!!
+	// request.getPart("file"); 로 전달된 파일 데이터를 가져와야한다. 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 요청
 		String username = request.getParameter("username");

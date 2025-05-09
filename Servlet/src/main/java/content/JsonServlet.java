@@ -2,10 +2,10 @@ package content;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dto.Users;
@@ -40,7 +40,8 @@ public class JsonServlet extends HttpServlet {
 		ServletInputStream sis = request.getInputStream();
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> map
-			= mapper.readValue(sis, new TypeReference<Map<String,Object>>() { });
+//		= mapper.readValue(sis, new TypeReference<Map<String,Object>>() { });
+		= mapper.readValue(sis, new HashMap<String,Object>().getClass());
 		String name = (String) map.get("name");
 		int age = Integer.parseInt( (String) map.get("age"));
 		List<String> roles = (List<String>) map.get("roles");
@@ -62,6 +63,7 @@ public class JsonServlet extends HttpServlet {
 		ServletInputStream sis = request.getInputStream();
 		ObjectMapper mapper = new ObjectMapper();
 		Users users = mapper.readValue(sis, Users.class);
+//		Users users = mapper.readValue(sis, new Users().getClass());
 		System.out.println("name : " + users.getName());
 		System.out.println("age : " + users.getAge());
 		System.out.println("roles : " + users.getRoles());
